@@ -1,0 +1,20 @@
+{
+    "name": "sirjohn96/envdep",
+    "description": "A tool for deploying server configuration and preparing matching local environments.",
+    "type": "project",
+    "require": {
+        "symfony/console": "^5.2",
+        "deployer/deployer": "^6.8"
+    },
+    "require-dev": {
+        "sirjohn96/changelogger": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "Sirod Johnson",
+            "email": "SirodTJ@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

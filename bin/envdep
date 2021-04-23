@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+define('ENVDEP_VERSION', '1.0.0-dev');
+
+require __DIR__.'/../vendor/autoload.php';
+
+use App\Command\MainCommand;
+use Symfony\Component\Console\Application;
+
+$application = new Application('EnvDep', ENVDEP_VERSION);
+
+// TODO: Register commands.
+// init command
+// wrapper for: ansible-galaxy install -r provisioning/requirements.yml
+$application->add(new MainCommand());
+
+$application->run();

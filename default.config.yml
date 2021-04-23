@@ -1,0 +1,16 @@
+---
+name: 
+
+timezone:
+mysql_version:
+mariadb_version:
+webserver: 'nginx'
+dbserver: 'mysql'
+php_version: '8.0'
+
+extra_software:
+  - adminer
+  - mailhog
+  - nodejs
+  - postfix
+  - xdebug

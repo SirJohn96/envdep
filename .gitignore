@@ -1,0 +1,5 @@
+# Composer-managed Files
+/vendor/
+
+# Ansible Galaxy Roles
+/provisioning/roles/galaxy_roles/

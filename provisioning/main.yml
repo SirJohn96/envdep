@@ -1,0 +1,37 @@
+---
+- hosts: localhost
+  become: yes
+
+  vars_files:
+    - ../default.config.yml
+
+  pre_tasks:
+    - import_tasks: tasks/config.yml
+      tags: ['always']
+
+  roles:
+    - role: geerlingguy.git
+    - role: geerlingguy.apache
+      when: webserver == 'apache'
+    - role: geerlingguy.apache-php-fpm
+      when: webserver == 'apache'
+    - role: geerlingguy.nginx
+      when: webserver == 'nginx'
+    - role: geerlingguy.php-versions
+    - role: geerlingguy.php
+    - role: geerlingguy.mysql
+      when: dbserver == 'mysql'
+    - role: geerlingguy.php-mysql
+      when: dbserver == 'mysql'
+    - role: geerlingguy.composer
+
+    - role: geerlingguy.adminer
+      when: "adminer" in extra_software
+    - role: geerlingguy.mailhog
+      when: "mailhog" in extra_software
+    - role: geerlingguy.nodejs
+      when: "nodejs" in extra_software
+    - role: geerlingguy.php-xdebug
+      when: "xdebug" in extra_software
+    - role: geerlingguy.postix
+      when: "postfix" in extra_software

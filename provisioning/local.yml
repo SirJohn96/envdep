@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  become: yes
+
+  vars_files:
+    - ../default.local.config.yml
+
+  pre_tasks:
+    - import_tasks: tasks/config.yml
+      tags: ['always']
+
+  roles:
+    - role: ddev
