@@ -1,12 +1,20 @@
 ---
-name: 
+name: EXAMPLE
 
-timezone:
-mysql_version:
-mariadb_version:
+main_hostname: example.com
+main_dir: "/srv/www/{{ main_hostname }}"
+main_docroot: "{{ main_dir }}/web"
+
+timezone: 'America/New_York'
+
+# The web server software to be used. Options: 'apache', 'nginx'.
 webserver: 'nginx'
+
+# The database software to be used. Options: 'mysql', 'mariadb'.
 dbserver: 'mysql'
-php_version: '8.0'
+
+mysql_version: '8.0'
+mariadb_version: '10.5'
 
 extra_software:
   - adminer
@@ -14,3 +22,15 @@ extra_software:
   - nodejs
   - postfix
   - xdebug
+
+php_version: '8.0'
+php_packages_extra:
+  - "php{{ php_version }}-fpm"
+php_enable_php_fpm: true
+php_fpm_listen: "127.0.0.1:9000"
+
+composer_version:
+
+nodejs_version: "10.x"
+
+php_xdebug_version: "2.9.5"
