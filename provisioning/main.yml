@@ -26,12 +26,12 @@
     - role: geerlingguy.composer
 
     - role: geerlingguy.adminer
-      when: "adminer" in extra_software
+      when: '"adminer" in extra_software'
     - role: geerlingguy.mailhog
-      when: "mailhog" in extra_software
+      when: '"mailhog" in extra_software'
     - role: geerlingguy.nodejs
-      when: "nodejs" in extra_software
+      when: '"nodejs" in extra_software'
     - role: geerlingguy.php-xdebug
-      when: "xdebug" in extra_software
+      when: '"xdebug" in extra_software'
     - role: geerlingguy.postix
-      when: "postfix" in extra_software
+      when: '"postfix" in extra_software'
