@@ -9,6 +9,7 @@
     env: " {{ lookup('env', 'ENVDEP_ENV') }}"
 
 - name: Define config
+  include_tasks: "{{ item }}"
   with_fileglob:
     - "{{ config_dir }}/config.yml"
     - "{{ config_dir }}/secrets.yml"
