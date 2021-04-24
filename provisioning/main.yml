@@ -33,5 +33,5 @@
       when: '"nodejs" in extra_software'
     - role: geerlingguy.php-xdebug
       when: '"xdebug" in extra_software'
-    - role: geerlingguy.postix
+    - role: geerlingguy.postfix
       when: '"postfix" in extra_software'
