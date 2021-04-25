@@ -9,6 +9,8 @@
   pre_tasks:
     - set_fact:
         ddev: true
+    - set_fact:
+        php_fpm_listen: 'unix:/run/php-fpm.sock'
     - import_tasks: tasks/config.yml
       tags: ['always']
 

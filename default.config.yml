@@ -1,7 +1,7 @@
 ---
-machine_name: EXAMPLE
+machine_name: envdep-example
 
-main_hostname: example.com
+main_hostname: envdep-example.com
 main_dir: "/var/www/{{ main_hostname }}"
 main_docroot: "public"
 
@@ -15,7 +15,7 @@ dbserver: 'mysql'
 
 nginx_vhosts:
 #Example vhost below, showing all available options:
-- listen: "443 ssl default_server"
+- listen: "443 ssl http2 default_server"
   server_name: "www.{{ main_hostname }}"
   server_name_redirect: "{{ main_hostname }}"
   root: "{{ main_dir }}/{{ main_docroot }}"
@@ -32,15 +32,15 @@ mariadb_version: '10.5'
 
 mysql_root_password: root
 mysql_databases:
-  - name: "example_name"
+  - name: "envdep-example-db"
     encoding: utf8mb4
     collation: utf8mb4_general_ci
 
 mysql_users:
-  - name: "example_user"
+  - name: "envdep-example-user"
     host: "%"
     password: "test"
-    priv: "example_name.*:ALL"
+    priv: "envdep-example-db.*:ALL"
 
 extra_software:
   - adminer

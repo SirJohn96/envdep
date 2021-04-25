@@ -2,7 +2,7 @@
 {% if item.server_name_redirect is defined %}
 server {
 {% if '80' not in item.listen %}
-    listen 80;
+    listen 80 {{ 'default_server' if 'default_server' in item.listen else '' }};
 {% endif %}
 {% if 'default_server' in item.listen %}
     listen {{ item.listen[:-15] }};
