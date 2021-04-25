@@ -32,15 +32,15 @@ mariadb_version: '10.5'
 
 mysql_root_password: root
 mysql_databases:
-  - name: "envdep-example-db"
+  - name: "envdep_example_db"
     encoding: utf8mb4
     collation: utf8mb4_general_ci
 
 mysql_users:
-  - name: "envdep-example-user"
+  - name: "envdep_example_user"
     host: "%"
     password: "test"
-    priv: "envdep-example-db.*:ALL"
+    priv: "envdep_example_db.*:ALL"
 
 extra_software:
   - adminer
