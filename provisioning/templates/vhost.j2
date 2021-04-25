@@ -26,7 +26,7 @@ server {
     root {{ item.root }};
     index {{ item.index | default('index.html index.htm') }};
 
-{% if item.ssl_certificate is defined %}
+{% if '443' in item.listen and item.ssl_certificate is defined %}
     ssl_certificate {{ item.ssl_certificate }};
     ssl_certificate_key {{ item.ssl_certificate_key }};
 {% elif ddev %}
