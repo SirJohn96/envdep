@@ -1,9 +1,9 @@
 ---
-name: EXAMPLE
+machine_name: EXAMPLE
 
 main_hostname: example.com
-main_dir: "/srv/www/{{ main_hostname }}"
-main_docroot: "{{ main_dir }}/web"
+main_dir: "/var/www/{{ main_hostname }}"
+main_docroot: "public"
 
 timezone: 'America/New_York'
 
@@ -13,8 +13,32 @@ webserver: 'nginx'
 # The database software to be used. Options: 'mysql', 'mariadb'.
 dbserver: 'mysql'
 
+nginx_vhosts:
+#Example vhost below, showing all available options:
+- listen: "443 ssl default_server"
+  server_name: "www.{{ main_hostname }}"
+  server_name_redirect: "{{ main_hostname }}"
+  root: "{{ main_dir }}/{{ main_docroot }}"
+  index: "index.php index.html index.htm"
+  filename: "{{ main_hostname }}.conf"
+  access_log: "/var/log/nginx/{{ main_hostname }}_access.log"
+  error_log: "/var/log/nginx/{{ main_hostname }}_error.log"
+  state: "present"
+
 mysql_version: '8.0'
 mariadb_version: '10.5'
+
+mysql_root_password: root
+mysql_databases:
+  - name: "example_name"
+    encoding: utf8mb4
+    collation: utf8mb4_general_ci
+
+mysql_users:
+  - name: "example_user"
+    host: "%"
+    password: "test"
+    priv: "example_name.*:ALL"
 
 extra_software:
   - adminer
@@ -29,8 +53,13 @@ php_packages_extra:
 php_enable_php_fpm: true
 php_fpm_listen: "127.0.0.1:9000"
 
-composer_version:
+adminer_theme: 'pepa-linha'
+
+composer_version: 2
 
 nodejs_version: "10.x"
 
-php_xdebug_version: "2.9.5"
+php_xdebug_version: "3.0.4"
+
+extra_packages:
+  - build-essential

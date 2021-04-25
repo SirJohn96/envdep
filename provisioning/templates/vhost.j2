@@ -1,0 +1,47 @@
+{% block server_redirect %}
+{% if item.server_name_redirect is defined %}
+server {
+{% if '80' not in item.listen %}
+    listen 80;
+{% endif %}
+{% if 'default_server' in item.listen %}
+    listen {{ item.listen[:-15] }};
+{% else %}
+    listen {{ item.listen }};
+{% endif %}
+    server_name {{ item.server_name_redirect }};
+    return 301 https://{{ item.server_name.split(' ')[0] }}$request_uri;
+}
+{% endif %}
+{% endblock server_redirect %}
+
+server {
+    listen {{ item.listen | default('80') }};
+    server_name {{ item.server_name }};
+    root {{ item.root }};
+    index {{ item.index | default('index.html index.htm') }};
+
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ ^/index\.php(/|$) {
+        fastcgi_pass {{ php_fpm_listen }};
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+        internal;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+
+    error_log {{ item.error_log }};
+    access_log {{ item.access_log }};
+
+{% if item.extra_parameters is defined %}
+    {{ item.extra_parameters|indent(4) }}
+{% endif %}
+}

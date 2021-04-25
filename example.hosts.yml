@@ -1,0 +1,4 @@
+all:
+  hosts:
+    example-web-01:
+      ansible_host: xxx.xxx.xxx.xxx

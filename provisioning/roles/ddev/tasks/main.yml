@@ -1,2 +1,38 @@
 ---
+- name: Set .ddev directory location.
+  set_fact:
+    ddev_directory: "{{ lookup('env', 'ENVDEP_PROJECT_ROOT') }}/.ddev"
 
+- name: Ensure the .ddev directory exists.
+  file:
+    path: "{{ ddev_directory }}"
+    state: directory
+    mode: 0755
+
+- name: Copy DDEV-local configuration in place.
+  template:
+    src: "../templates/config.yaml.j2"
+    dest: "{{ ddev_directory }}/config.yaml"
+
+- name: Ensure the .ddev directory exists.
+  file:
+    path: "{{ ddev_directory }}/nginx_full"
+    state: directory
+    mode: 0755
+
+- name: Copy placeholder ddev nginx configuration file.
+  template:
+    src: "../templates/nginx-site.conf.j2"
+    dest: "{{ ddev_directory }}/nginx_full/nginx-site.conf"
+
+- name: Copy NGinx configuration.
+  template:
+    src: "{{ playbook_dir }}/templates/vhost.j2"
+    dest: "{{ ddev_directory }}/nginx_full/{{ item.server_name }}.conf"
+  with_items: "{{ nginx_vhosts }}"
+
+- name: Setup Adminer.
+  template:
+    src: "../templates/docker-compose.adminer.yaml.j2"
+    dest: "{{ ddev_directory }}/docker-compose.adminer.yaml"
+  when: '"adminer" in extra_software'

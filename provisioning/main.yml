@@ -1,37 +1,61 @@
 ---
-- hosts: localhost
+- hosts: all
   become: yes
 
   vars_files:
     - ../default.config.yml
+    - "{{ lookup('env', 'ENVDEP_CONFIG_DIR') }}/secrets.yml"
+    - "{{ lookup('env', 'ENVDEP_CONFIG_DIR') }}/config.yml"
 
   pre_tasks:
     - import_tasks: tasks/config.yml
       tags: ['always']
+    - name: Add extra packages
+      apt:
+        name: "{{ extra_packages }}"
+        state: present
+      tags: ['always']
+    - name: Set the PHP webserver daemon correctly when nginx is in use.
+      set_fact:
+        php_webserver_daemon: nginx
+      when: webserver == 'nginx'
+      tags: ['webserver', 'database', 'php']
 
   roles:
     - role: geerlingguy.git
     - role: geerlingguy.apache
       when: webserver == 'apache'
+      tags: ['apache', 'webserver']
     - role: geerlingguy.apache-php-fpm
       when: webserver == 'apache'
+      tags: ['apache', 'php', 'webserver']
     - role: geerlingguy.nginx
       when: webserver == 'nginx'
+      tags: ['nginx', 'webserver']
     - role: geerlingguy.php-versions
+      tags: ['php']
     - role: geerlingguy.php
+      tags: ['php']
     - role: geerlingguy.mysql
       when: dbserver == 'mysql'
+      tags: ['mysql', 'database']
     - role: geerlingguy.php-mysql
       when: dbserver == 'mysql'
+      tags: ['php', 'mysql', 'database']
     - role: geerlingguy.composer
 
     - role: geerlingguy.adminer
       when: '"adminer" in extra_software'
+      tags: ['adminer']
     - role: geerlingguy.mailhog
       when: '"mailhog" in extra_software'
+      tags: ['mail', 'mailhog']
     - role: geerlingguy.nodejs
       when: '"nodejs" in extra_software'
+      tags: ['nodejs']
     - role: geerlingguy.php-xdebug
       when: '"xdebug" in extra_software'
+      tags: ['xdebug', 'php']
     - role: geerlingguy.postfix
       when: '"postfix" in extra_software'
+      tags: ['mail', 'postfix']

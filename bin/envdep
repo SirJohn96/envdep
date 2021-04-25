@@ -13,6 +13,8 @@ $application = new Application('EnvDep', ENVDEP_VERSION);
 // TODO: Register commands.
 // init command
 // wrapper for: ansible-galaxy install -r provisioning/requirements.yml
+// ANSIBLE_CONFIG=./vendor/sirjohn96/envdep/ansible.cfg ENVDEP_PROJECT_ROOT=$PWD ENVDEP_CONFIG_DIR=$PWD/server ENVDEP_ENV=production ansible-playbook vendor/sirjohn96/envdep/provisioning/local.yml -i server/environments/production/hosts.yml
+// ANSIBLE_CONFIG=./vendor/sirjohn96/envdep/ansible.cfg ENVDEP_PROJECT_ROOT=$PWD ENVDEP_CONFIG_DIR=$PWD/server ENVDEP_ENV=production ansible-playbook vendor/sirjohn96/envdep/provisioning/main.yml -i server/environments/production/hosts.yml
 $application->add(new MainCommand());
 
 $application->run();
