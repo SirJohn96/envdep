@@ -23,6 +23,8 @@ nginx_vhosts:
   filename: "{{ main_hostname }}.conf"
   access_log: "/var/log/nginx/{{ main_hostname }}_access.log"
   error_log: "/var/log/nginx/{{ main_hostname }}_error.log"
+  ssl_certificate: "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+  ssl_certificate_key: "/etc/ssl/private/ssl-cert-snakeoil.key"
   state: "present"
 
 mysql_version: '8.0'

@@ -1,10 +1,6 @@
 # This is a placeholder to prevent DDEV-local from genrating a file with a default_server entry.
 server {
-    listen 80 default_server;
-    listen 443 ssl default_server;
-
-    ssl_certificate /etc/ssl/certs/master.crt;
-    ssl_certificate_key /etc/ssl/certs/master.key;
+    listen 80;
 
     include /etc/nginx/monitoring.conf;
 }

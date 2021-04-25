@@ -21,6 +21,14 @@ server {
     root {{ item.root }};
     index {{ item.index | default('index.html index.htm') }};
 
+{% if item.ssl_certificate is defined %}
+    ssl_certificate {{ item.ssl_certificate }};
+    ssl_certificate_key {{ item.ssl_certificate_key }};
+{% elif ddev %}
+    ssl_certificate /etc/ssl/certs/master.crt;
+    ssl_certificate_key /etc/ssl/certs/master.key;
+{% endif %}
+
     location / {
         try_files $uri /index.php$is_args$args;
     }

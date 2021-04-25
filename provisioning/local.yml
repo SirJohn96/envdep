@@ -7,6 +7,8 @@
     - "{{ lookup('env', 'ENVDEP_CONFIG_DIR') }}/config.yml"
 
   pre_tasks:
+    - set_fact:
+        ddev: true
     - import_tasks: tasks/config.yml
       tags: ['always']
 
