@@ -10,7 +10,12 @@ server {
     listen {{ item.listen }};
 {% endif %}
     server_name {{ item.server_name_redirect }};
+
+{% if '80' in item.listen %}
+    return 301 http://{{ item.server_name.split(' ')[0] }}$request_uri;
+{% else %}
     return 301 https://{{ item.server_name.split(' ')[0] }}$request_uri;
+{% endif %}
 }
 {% endif %}
 {% endblock server_redirect %}
